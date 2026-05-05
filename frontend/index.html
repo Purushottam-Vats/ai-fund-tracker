@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enterprise Fund Tracker</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="layout">
+        <aside class="sidebar">
+            <div class="logo">🏦 GovTrack AI</div>
+            <nav>
+                <ul>
+                    <li><a href="#dashboard">Dashboard</a></li>
+                    <li><a href="#management">Project Management</a></li>
+                    <li><a href="#transactions">Transactions</a></li>
+                    <li><a href="#ai-insights">AI Insights & Reports</a></li>
+                    <li><a href="dashboard.html" target="_blank">🌐 Public View</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="content">
+            <header>
+                <h1>Fund Utilization & Impact Dashboard</h1>
+                <p>Monitor, Analyze, and Optimize Organizational Spending</p>
+            </header>
+
+            <section id="dashboard" class="kpi-grid">
+                <div class="card kpi-card">
+                    <h3>Total Allocated</h3>
+                    <h2 id="total-allocated" class="text-primary">$0</h2>
+                </div>
+                <div class="card kpi-card">
+                    <h3>Total Utilized</h3>
+                    <h2 id="total-utilized" class="text-success">$0</h2>
+                </div>
+                <div class="card kpi-card">
+                    <h3>Available Balance</h3>
+                    <h2 id="total-balance" class="text-warning">$0</h2>
+                </div>
+            </section>
+
+            <section class="chart-grid">
+                <div class="card">
+                    <h3>Department-Wise Spending</h3>
+                    <div class="chart-container">
+                        <canvas id="deptChart"></canvas>
+                    </div>
+                </div>
+                <div class="card">
+                    <h3>Impact Scores (Value per Dollar)</h3>
+                    <div id="impact-container" class="impact-list">
+                        </div>
+                </div>
+            </section>
+
+            <section id="management" class="grid-2">
+                <div class="card">
+                    <h3>Add New Project</h3>
+                    <form id="project-form">
+                        <input type="text" id="p-name" placeholder="Project Name" required>
+                        <input type="text" id="p-dept" placeholder="Department" required>
+                        <input type="number" id="p-alloc" placeholder="Allocated Amount ($)" required>
+                        <input type="text" id="p-unit" placeholder="Output Unit (e.g. Trees Planted)" required>
+                        <button type="submit" class="btn btn-primary">Create Project</button>
+                    </form>
+                </div>
+                <div class="card">
+                    <h3>Log Transaction</h3>
+                    <form id="tx-form">
+                        <select id="tx-project" required>
+                            <option value="">Select Project...</option>
+                        </select>
+                        <input type="number" id="tx-amount" placeholder="Amount ($)" required>
+                        <input type="text" id="tx-category" placeholder="Category (e.g. Infrastructure)" required>
+                        <input type="text" id="tx-desc" placeholder="Description" required>
+                        <button type="submit" class="btn btn-success">Log Transaction</button>
+                    </form>
+                </div>
+            </section>
+
+            <section id="ai-insights" class="grid-2">
+                <div class="card">
+                    <h3>🤖 AI Anomaly Detection</h3>
+                    <div id="ai-alerts" class="alerts-container">
+                        </div>
+                    <button onclick="fetchAnalysis()" class="btn btn-warning mt-10">Run AI Audit Scan</button>
+                </div>
+                <div class="card">
+                    <h3>Automated Report Generation</h3>
+                    <p class="text-muted">Generate a consolidated summary of usage, impact, and anomalies.</p>
+                    <button onclick="generateReport()" class="btn btn-primary mt-10">📄 Generate PDF Report</button>
+                    <div id="report-output" class="report-box" style="display:none;"></div>
+                </div>
+            </section>
+
+            <section id="transactions" class="card">
+                <h3>Recent Transactions Log</h3>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Project</th>
+                            <th>Description</th>
+                            <th>Category</th>
+                            <th>Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tx-table-body">
+                        </tbody>
+                </table>
+            </section>
+        </main>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

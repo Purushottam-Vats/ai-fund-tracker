@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Public Transparency Portal</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="public-bg">
+    <header class="public-header">
+        <h1>🌍 Public Transparency Portal</h1>
+        <p>Tracking government funding and social impact in real-time.</p>
+    </header>
+
+    <main class="public-container">
+        <div id="public-projects" class="grid-2">
+            </div>
+    </main>
+
+    <script>
+        const API_URL = 'http://127.0.0.1:5000';
+        
+        async function loadPublicData() {
+            const res = await fetch(`${API_URL}/get_dashboard_data`);
+            const data = await res.json();
+            
+            const container = document.getElementById('public-projects');
+            data.projects.forEach(p => {
+                const percent = Math.min((p.utilized / p.allocated) * 100, 100).toFixed(1);
+                
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.innerHTML = `
+                    <h3>${p.name}</h3>
+                    <p class="text-muted">Department: ${p.department}</p>
+                    <div class="progress-container">
+                        <div class="progress-bar" style="width: ${percent}%;"></div>
+                    </div>
+                    <p><strong>Funded:</strong> $${p.utilized} / $${p.allocated} (${percent}%)</p>
+                    <p><strong>Impact:</strong> ${p.output} ${p.output_unit} achieved.</p>
+                `;
+                container.appendChild(card);
+            });
+        }
+        
+        document.addEventListener('DOMContentLoaded', loadPublicData);
+    </script>
+</body>
+</html>
